@@ -1,9 +1,9 @@
 import streamlit as st
 import pandas as pd
 import pickle 
-#from sklearn.ensemble import RandomForestRegressor
 import matplotlib.pyplot as plt
-#from sklearn.preprocessing import LabelEncoder
+from sklearn.ensebmle import RandomForestRegressor
+
 
 ###########Page Configuration################
 st.set_page_config(
@@ -95,6 +95,8 @@ residence_type = row3_col3.selectbox(
     "Select the customers current type of residence:",
     ("rural",
     "urban"))
+
+# fourth columns for user input
 row4_col1, row4_col2 = st.columns([1,2])
 
 if row4_col1.checkbox('Calculate BMI', False):
@@ -120,7 +122,7 @@ else:
             42.0,
             27.0)
     
-#st.write(f"BMI: {bmi}") 
+
    
 
 def predict_stroke_risk():
