@@ -1,9 +1,9 @@
 import streamlit as st
 import pandas as pd
 import pickle 
-import matplotlib.pyplot as plt
-from sklearn.ensebmle import RandomForestRegressor
 
+import matplotlib.pyplot as plt
+#from sklearn.preprocessing import LabelEncoder
 
 ###########Page Configuration################
 st.set_page_config(
@@ -95,8 +95,6 @@ residence_type = row3_col3.selectbox(
     "Select the customers current type of residence:",
     ("rural",
     "urban"))
-
-# fourth columns for user input
 row4_col1, row4_col2 = st.columns([1,2])
 
 if row4_col1.checkbox('Calculate BMI', False):
@@ -126,13 +124,8 @@ else:
    
 
 def predict_stroke_risk():
-    cols = ['age', 'hypertension', 'heart_disease', 'avg_glucose_level', 'bmi',
-       'gender_Female', 'gender_Male', 'gender_Other', 'ever_married_No',
-       'ever_married_Yes', 'work_type_Govt_job', 'work_type_Never_worked',
-       'work_type_Private', 'work_type_Self-employed', 'work_type_children',
-       'Residence_type_Rural', 'Residence_type_Urban',
-       'smoking_status_formerly smoked', 'smoking_status_never smoked',
-       'smoking_status_smokes', 'smoking_status_unknown']
+    
+    cols = pd.get_dummies(data.drop('stroke', axis = 1)).columns
     df = pd.DataFrame(columns = cols)
     nulls = []
     for i in range (len(cols)):
@@ -188,12 +181,12 @@ def predict_stroke_risk():
     
     return df
 
-
+# predicting the users imputs
 
 df = predict_stroke_risk()
-
-
 preds = model.predict(df)
+
+
 #row4_col2.markdown(f' The predicted risk is: {preds[0]}')
 #################################################################
 
@@ -307,7 +300,8 @@ def imputing_bmi(dataset):
 
 @st.cache()
 def preparing_data(x):
-    x = x.drop('id', axis = 1)
+    if 'id' in x.columns:
+        x = x.drop('id', axis = 1)
     x['age'] =  x['age'].astype(int)
     x.loc[(x['age'] <= 9, ['smoking_status'])] = x.loc[(x['age'] <= 9, ['smoking_status'])].fillna('never smoked')
     x.loc[(x['age'] > 9 , ['smoking_status'])] = x.loc[(x['age'] > 9, ['smoking_status'])].fillna('unknown')
@@ -339,7 +333,6 @@ if uploaded_data is not None:
     
     
     st.success("🕺🏽🎉👍 You have succesfully assigned %i new customers to their respective insurance premium classes 🕺🏽🎉👍!" % new_customers.shape[0])
-    
     download_file = convert_to_csv(new_customers)
     modified_data_file = convert_to_csv(modified_data)
    
@@ -354,5 +347,4 @@ if uploaded_data is not None:
                        data = modified_data_file,
                        file_name = 'Modified_Data.csv')
     st.write(new_customers)
-    
    
