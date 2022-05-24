@@ -267,6 +267,7 @@ if st.checkbox("Show stroke risk assessment", False):
     fig1, ax1 = plt.subplots(figsize=(8,4))
     ax1.plot(df2['age'], preds_age, label = 'Stroke Risk Prediction')
     ax1.axvline(age, color = 'green', label = 'Current Age')
+    ax1.set_ylim(0, 1)
     ax1.set_xlabel('Age')
     ax1.set_ylabel('Stroke Risk')
     ax1.set_title('Stroke Risk in relation to age')
