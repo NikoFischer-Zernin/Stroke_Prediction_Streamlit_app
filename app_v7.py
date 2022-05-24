@@ -307,12 +307,9 @@ st.header("Insurance Premiums")
 uploaded_data = st.file_uploader("Choose a file with Customer Data for suggestions regarding insurance premiums")
 
 def imputing_bmi(dataset):
-    male_bmi = data[data['gender'] == 'Male'][['bmi', 'age']].dropna()
-    female_bmi = data[data['gender'] == 'Female'][['bmi', 'age']].dropna()
-    male_bmi = male_bmi.groupby('age').mean()
-    female_bmi = female_bmi.groupby('age').mean()
-    total_bmi = data[['age', 'bmi']].dropna()
-    total_bmi = total_bmi.groupby('age').mean()
+    male_bmi = data[data['gender'] == 'Male'][['bmi', 'age']].dropna().groupby('age').mean()
+    female_bmi = data[data['gender'] == 'Female'][['bmi', 'age']].dropna().groupby('age').mean()
+    total_bmi = data[['age', 'bmi']].dropna().groupby('age').mean()
     
     for i in dataset.loc[(dataset['gender'] == 'Male') & (dataset['bmi'].isnull())].index:
         age = dataset.loc[i]['age']
