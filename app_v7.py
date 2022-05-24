@@ -273,31 +273,7 @@ if st.checkbox("Show stroke risk assessment", False):
     ax1.legend()
     st.pyplot(fig1)
 
-def plot(st, model):
-    import matplotlib.pyplot as plt
 
-    # Hard coding labels is not a good thing to do normally ...
-    labels = {'age', 'hypertension', 'heart_disease', 'avg_glucose_level', 'bmi',
-            'gender_Female', 'gender_Male', 'gender_Other', 'ever_married_No',
-            'ever_married_Yes', 'work_type_Govt_job', 'work_type_Never_worked',
-            'work_type_Private', 'work_type_Self-employed', 'work_type_children',
-            'Residence_type_Rural', 'Residence_type_Urban',
-            'smoking_status_formerly smoked', 'smoking_status_never smoked',
-            'smoking_status_smokes', 'smoking_status_unknown'}
-    sizes = model.feature_importances_
-
-    assert(len(labels)==len(sizes))
-
-    data = list(zip(sizes, labels))
-    data = sorted(data, key= lambda x: x[0], reverse=True)
-    data = list(zip(*data))
-    sizes, labels = data[0], data[1]
-
-    plt.rcParams.update({
-        "figure.facecolor":  (1.0, 0.0, 0.0, 0.3),  # red
-        "axes.facecolor":    (0.0, 1.0, 0.0, 0.0),  # green
-        "savefig.facecolor": (0.0, 0.0, 1.0, 0.0),  # blue  
-    })
     
 #########################################
 #uploader section
@@ -353,8 +329,7 @@ if uploaded_data is not None:
     preds = model.predict(modified_data)
 
     premium = insurance_class(preds, False)
-    #le = LabelEncoder()
-    #premium = le.fit_transform(premium.astype(float))
+  
    
     
     new_customers["Insurance premium class"] = premium
