@@ -10,4 +10,5 @@ When predicting the specified user inputs, it can return a graph showing the fut
 
 On the other hand, when dealing with DataFrames, the User is able to download the original Dataset with the insurance classificaiton or the Modified DataFrame with the original Predictions appended.
 
+The link to the App is: https://share.streamlit.io/nikofischer-zernin/stroke_prediction_streamlit_app/main/app_v7.py
 
