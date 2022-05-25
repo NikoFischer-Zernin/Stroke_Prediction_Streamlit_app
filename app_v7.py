@@ -326,7 +326,8 @@ if uploaded_data is not None:
     preds = model.predict(modified_data)
 
     premium = insurance_class(preds, False)
-    modified_data['Stroke Pediction'] = preds
+    modified_data_with_preds = modified_data.copy()
+    modified_data_with_preds['Stroke Pediction'] = preds
   
    
     
@@ -335,7 +336,7 @@ if uploaded_data is not None:
     
     st.success("🕺🏽🎉👍 You have succesfully assigned %i new customers to their respective insurance premium classes 🕺🏽🎉👍!" % new_customers.shape[0])
     download_file = convert_to_csv(new_customers)
-    modified_data_file = convert_to_csv(modified_data)
+    modified_data_file = convert_to_csv(modified_data_with_preds)
    
     
     row6_col1, row6_col2 = st.columns([1,1])
