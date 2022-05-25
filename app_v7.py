@@ -326,6 +326,7 @@ if uploaded_data is not None:
     preds = model.predict(modified_data)
 
     premium = insurance_class(preds, False)
+    modified_data['Stroke Pediction'] = preds
   
    
     
